@@ -1,0 +1,19 @@
+<section id="hero" class="section">
+    <div class="hero__container">
+        <div class="image__container">
+            <div class="left">
+                <img src="./assets/images/hero_left.avif" alt="">
+            </div>
+            <div class="right">
+                <img src="./assets/images/hero_right.avif" alt="">
+            </div>
+        </div>
+        <div class="shop__btns">
+            <a routerLink="/collections/{{btn.gender}}" class="btn-shop" *ngFor="let btn of buttons">
+                {{ btn.name }}
+            </a>
+        </div>
+    </div>
+</section>
+
+<app-product-category></app-product-category>

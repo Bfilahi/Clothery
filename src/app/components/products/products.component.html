@@ -1,0 +1,24 @@
+<div class="section__container">
+    <ul>
+        <li *ngFor="let product of products">
+            <a routerLink="/details/{{ product.id }}">
+                <div class="img__container">
+                    <img src="{{ product.imgUrl }}" alt="">
+                </div>
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+            </a>
+        </li>
+    </ul>
+
+    <button *ngIf="products.length != totalElements" class="load-more" (click)="listProducts()">
+        Load more
+    </button>
+
+    <div *ngIf="products.length == 0" class="alert">
+        <p>NOTHING MATCHES YOUR SEARCH</p>
+        <p>But don't give up – check the spelling or try less specific search terms.</p>
+    </div>
+</div>
+
+

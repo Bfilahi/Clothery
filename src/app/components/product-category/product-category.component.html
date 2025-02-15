@@ -1,0 +1,23 @@
+<div id="shop" class="section">
+    <div class="shop__container">
+        <ul class="shop__wrapper">
+            <li class="card" *ngFor="let category of productCategories">
+                <h2 class="card__title">{{ category.categoryName }}</h2>
+                <a 
+                    [routerLink]="['/', category.categoryGender, category.categoryType]" 
+                    [queryParams]="{id: category.id}">
+                    <img src="{{ category.categoryImage }}" alt="">
+                </a>
+                <a 
+                    [routerLink]="['/', category.categoryGender, category.categoryType]" 
+                    [queryParams]="{id: category.id}"
+                    class="shop-now-btn btn">
+                    SHOP NOW
+                    <span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
