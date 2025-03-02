@@ -1,0 +1,122 @@
+.section__container{
+    display: flex;
+    gap: 2em;
+    max-width: 70em;
+    margin-inline: auto;
+}
+
+.left__content{
+    width: 70%;
+}
+
+.right__content{
+    width: 30%;
+    height: 20em;
+    background-color: var(--bg-light);
+    padding: 1em;
+}
+
+.products__wrapper .product,
+.size-quantity,
+.total{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+}
+
+.total{
+    padding-block: 1em;
+    margin-block: 2em;
+    border-block: 1px solid var(--color-gray);
+}
+
+.size-quantity label{
+    margin-right: 1em;
+}
+
+.size-quantity select{
+    background: transparent;
+    color: var(--color-white);
+}
+
+.size-quantity select option{
+    background-color: var(--bg-light);
+}
+
+.products__wrapper .product{
+    align-items: flex-start;
+    padding: 1em;
+    background-color: var(--bg-light);
+}
+
+.products__wrapper .product:not(:last-child){
+    border-bottom: 1px solid var(--color-gray);
+}
+
+.product__img{
+    width: 5em;
+    min-width: 5em;
+}
+
+.product__details{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .5em;
+}
+
+.product__details .product__description,
+.product__details .quantity{
+    font-size: .9em;
+}
+
+.product__details .btn-remove{
+    align-self: flex-end;
+}
+
+.btn-purchase{
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    font-weight: bold;
+    background-color: var(--color-green);
+}
+
+.empty{
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty p{
+    font-size: 1.5em;
+}
+
+
+@media (max-width: 1200px) {
+    .section__container{
+        margin-inline: 1.5em;
+    }
+}
+
+@media (max-width: 800px) {
+    .section__container{
+        flex-direction: column;
+    }
+    .left__content{
+        width: 100%;
+    }
+    
+    .right__content{
+        width: 100%;
+        height: 15em;
+    }
+
+    .btn-purchase{
+        font-size: 1em;
+    }
+}

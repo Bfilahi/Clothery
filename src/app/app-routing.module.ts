@@ -4,8 +4,16 @@ import { ProductsComponent } from './components/products/products.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
+import { WishlistComponent } from './components/wishlist/wishlist.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 const routes: Routes = [
+
+  {path: 'checkout', component: CheckoutComponent},
+
+  {path: 'wishlist-details', component: WishlistComponent},
+  {path: 'cart-details', component: CartDetailsComponent},
 
   {path: 'details/:id', component: ProductDetailsComponent},
 

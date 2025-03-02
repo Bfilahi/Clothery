@@ -2,6 +2,8 @@
     --color-outline: rgb(195, 176, 4);
     --color-white: rgba(255, 255, 255, 0.75);
     --color-gray: #333333;
+    --color-green: rgb(1, 53, 1);
+    --color-alert: rgb(95, 4, 4);
     --bg-light: rgb(21, 21, 21);
     --bg-dark: rgb(0, 0, 0);
 }
@@ -33,10 +35,14 @@ body::-webkit-scrollbar-thumb{
     background-color: var(--color-gray);
 }
 
+body.block-scrollbar::-webkit-scrollbar{
+    width: 0;
+}
+
 
 /* common styles */
 main{
-    /* min-height: 90vh; */
+    min-height: 90vh;
 }
 
 a{
@@ -112,21 +118,6 @@ button{
     background-color: var(--bg-dark);
     /* overflow: hidden; */
 }
-
-/* #header input{
-    width: 40%;
-    max-width: 30rem;
-    padding: .5em 1em;
-    border-radius: 10em;
-    border: 0;
-    background-color: var(--color-gray);
-    color: var(--color-white);
-    outline: 0;
-} */
-
-/* #header input:focus{
-    box-shadow: 0 0 5px rgb(0, 123, 255);
-} */
 
 #header .search{
     width: 40%;
@@ -283,7 +274,6 @@ button{
         font-size: .7em;
     }
 }
-
 
 
 /* FOOTER */

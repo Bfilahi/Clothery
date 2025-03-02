@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable, tap, of, BehaviorSubject } from 'rxjs';
 import { ProductCategory } from '../common/product-category';
 import { Product } from '../common/product';
 import { ProductImages } from '../common/product-images';
@@ -11,6 +11,9 @@ import { ProductSizes } from '../common/product-sizes';
 })
 export class ProductService {
 
+  searchKeyword: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  
+  cachedProductCategories: ProductCategory[] = [];
   baseUrl: string = 'http://localhost:8080/api';
 
   constructor(private httpClient: HttpClient) { }
@@ -19,9 +22,15 @@ export class ProductService {
   getProductCategories(): Observable<ProductCategory[]>{
     const searchUrl = `${this.baseUrl}/product-category`;
 
-    return this.httpClient.get<GetResponseProductCategory>(searchUrl).pipe(
-      map(item => item._embedded.ProductCategory)
-    );
+    if(this.cachedProductCategories.length > 0)
+      return of(this.cachedProductCategories);
+
+    else{
+      return this.httpClient.get<GetResponseProductCategory>(searchUrl).pipe(
+        map(item => item._embedded.ProductCategory),
+        tap(item => this.cachedProductCategories = item)
+      );
+    }
   }
 
   getProductsById(categoryId: number, page: number, size: number): Observable<GetResponseProduct>{
@@ -38,6 +47,8 @@ export class ProductService {
 
   searchProducts(keyword: string, page: number, size: number): Observable<GetResponseProduct>{
     const searchUrl = `${this.baseUrl}/products/search/findByNameContaining?name=${keyword}&page=${page}&size=${size}`;
+
+    this.searchKeyword.next(keyword);
 
     return this.httpClient.get<GetResponseProduct>(searchUrl);
   }

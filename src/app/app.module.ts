@@ -10,6 +10,16 @@ import { ProductCategoryComponent } from './components/product-category/product-
 import { HttpClientModule } from '@angular/common/http';
 import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { CartStatusComponent } from './components/cart-status/cart-status.component';
+import { QuickCartDetailsComponent } from './components/quick-cart-details/quick-cart-details.component';
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
+import { WishlistStatusComponent } from './components/wishlist-status/wishlist-status.component';
+import { WishlistComponent } from './components/wishlist/wishlist.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+
+
 
 @NgModule({
   declarations: [
@@ -19,14 +29,24 @@ import { ProductDetailsComponent } from './components/product-details/product-de
     HomeComponent,
     ProductCategoryComponent,
     SearchComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    CartStatusComponent,
+    QuickCartDetailsComponent,
+    CartDetailsComponent,
+    WishlistStatusComponent,
+    WishlistComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxMaskDirective,
+    NgxMaskPipe
   ],
-  providers: [],
+  providers: [provideNgxMask()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

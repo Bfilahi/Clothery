@@ -6,14 +6,13 @@
     </div>
 
     <div class="right__side">
-        <h3 class="name">{{ product.description | uppercase}}</h3>
+        <h3 class="name">{{ product.description | uppercase }}</h3>
         <p class="price">{{ product.unitPrice | currency: 'EUR' }}</p>
-
 
         <div class="size__container">
             <p *ngIf="product.unitsInStock > 0 && product.unitsInStock <= 3" class="alert low-in-stock">Low in stock.</p>
             <p *ngIf="product.unitsInStock === 0" class="alert out-of-stock">Out of stock.</p>
-            <ul class="size">
+            <ul class="size" [ngClass]="{'alert': !isSizeSelected && wasAddToCartPressed}">
                 <li *ngFor="let productSize of productSizes">
                     <button 
                     value="{{ productSize.size }}" #btn1 
@@ -25,9 +24,16 @@
                 </li>
             </ul>
 
+            <p *ngIf="!isSizeSelected && wasAddToCartPressed" class="alert-sizes">Please select from the available size options</p>
+
             <div class="bag__wishlist">
-                <a href="#" class="add">ADD TO CART</a>
-                <a href="#" class="like"><i class="fa-regular fa-heart"></i></a>
+                <button class="add" (click)="addToCart(product)">ADD TO CART</button>
+                <button class="like" (click)="addToWishList(product)">
+                    <i *ngIf="!existsInWishlist; else exists" class="fa-regular fa-heart"></i>
+                    <ng-template #exists>
+                        <i class="fa-solid fa-heart"></i>
+                    </ng-template>
+                </button>
             </div>
 
             <div class="accordion">
@@ -167,23 +173,28 @@
                         </div>
 
                         <div [ngClass]="{ 'active': display === accBtn3.value}" class="section how-to">
-                            <!-- <img src="./assets/how_to_measure_male.webp" class="male" alt="">
-                            <img src="./assets/how_to_measure_female.webp" class="female" alt=""> -->
-                            <div>
-                                <h4>1. CHEST</h4>
-                                <p>
-                                    Wrap the tape measure around your upper back, under your armpits and the fullest part of your chest, checking in the mirror to ensure the tape measure is straight. Tape measure should be firm but not tight.
-                                </p>
+                            <div class="how-to-container">
+                                <div class="how-to-left">
+                                    <img src="assets/images/how_to_measure_male.avif" *ngIf="product.gender === 'men'" class="male" alt="">
+                                    <img src="assets/images/how_to_measure_female.avif" *ngIf="product.gender === 'women'"  class="female" alt="">
+                                </div>
 
-                                <h4>2. WAIST</h4>
-                                <p>
-                                    Tape measure should sit around the smallest point of your waist and should be firm but not tight (above belly button and below your rib cage).
-                                </p>
+                                <div class="how-to-right">
+                                    <h4>1. CHEST</h4>
+                                    <p>
+                                        Wrap the tape measure around your upper back, under your armpits and the fullest part of your chest, checking in the mirror to ensure the tape measure is straight. Tape measure should be firm but not tight.
+                                    </p>
 
-                                <h4>3. HIPS</h4>
-                                <p>
-                                    Wrap the tape measure around the fullest part of your bottom and around to the front of your hips, checking in the mirror to ensure the tape measure is straight.
-                                </p>
+                                    <h4>2. WAIST</h4>
+                                    <p>
+                                        Tape measure should sit around the smallest point of your waist and should be firm but not tight (above belly button and below your rib cage).
+                                    </p>
+
+                                    <h4>3. HIPS</h4>
+                                    <p>
+                                        Wrap the tape measure around the fullest part of your bottom and around to the front of your hips, checking in the mirror to ensure the tape measure is straight.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>  

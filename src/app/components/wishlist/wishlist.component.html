@@ -1,0 +1,41 @@
+<div class="section__container" *ngIf="wishlistItems.length > 0">
+    <ul class="products__wrapper">
+        <li class="product" *ngFor="let item of wishlistItems">
+            <a href="#">
+                <div class="img__container">
+                    <img src="{{item.imgUrl}}" alt="">
+                </div>
+
+                <div class="description-price">
+                    <p class="description">{{ item.description }}</p>
+                    <p class="price">{{ item.price | currency: 'EUR' }}</p>
+                </div>
+            </a>
+
+            <div class="sizes">
+                <select #select (change)="selectSize(select.value)">
+                    <option selected disabled>Select size</option>
+                    <ng-container *ngFor="let i of item.productSizes">
+                        <option *ngIf="i.quantity > 0" value="{{ i.size }}">{{ i.size }}</option>
+                    </ng-container>
+                </select>
+            </div>
+
+            <button [ngClass]="{'active': selectedSize != ''}" class="btn btn-add-to-cart" (click)="moveToCart(item)">
+                MOVE TO CART
+            </button>
+        </li>
+    </ul>
+</div>
+
+
+<div class="empty" *ngIf="wishlistItems.length === 0">
+    <i class="fa-solid fa-heart"></i>
+    <p>You have no Saved Items</p>
+
+    <!-- If user not signed in -->
+    <div class="not-signed-in">
+        <p>Sign in to sync your Saved Items across all your devices.</p>
+        <button class="btn-sign-in">SIGN IN</button>
+    </div>
+</div>

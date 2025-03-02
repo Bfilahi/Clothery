@@ -15,7 +15,7 @@
         Load more
     </button>
 
-    <div *ngIf="products.length == 0" class="alert">
+    <div *ngIf="products.length == 0 && !isLoading" class="alert">
         <p>NOTHING MATCHES YOUR SEARCH</p>
         <p>But don't give up – check the spelling or try less specific search terms.</p>
     </div>

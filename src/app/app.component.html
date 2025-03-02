@@ -12,17 +12,16 @@
 <body>
 
     <!-- 
-        * add observable to the search bar so both can have the same text.
-        * when the user uses the search bar at small devices, remove the scrollbar.
         * add a gif loader when requesting products so the user can tell when something is happening.
         * add the url at the top of every page.
-    -->
 
+        * solve the browser error that occurs whenever you select a product.
+        * wishlist not done yet. ==> if the user not logged in, remove the sign-in button.
+    -->
 
     <!-- 
         TODAY:
-        * finish productDetails front-end
-        * activate 'add to cart'
+        * if it's possible, make the country code related to the chosen country.
     -->
     
     <header id="header">
@@ -37,16 +36,10 @@
                         <i class="fa-solid fa-user"></i>
                     </a>
                 </li>
-                <li class="nav__link">
-                    <a href="#" class="wishList">
-                        <i class="fa-solid fa-heart"></i>
-                    </a>
-                </li>
-                <li class="nav__link">
-                    <a href="#" class="cart">
-                        <i class="fa-solid fa-briefcase"></i>
-                    </a>
-                </li>
+
+                <app-wishlist-status></app-wishlist-status>
+                
+                <app-cart-status></app-cart-status>
             </ul>
         </nav>
     </header>

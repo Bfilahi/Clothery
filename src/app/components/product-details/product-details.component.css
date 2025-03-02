@@ -8,7 +8,7 @@
 .left__side,
 .right__side{
     width: 50%;
-    overflow-y: scroll;
+    overflow-y: scroll;  /* ********************** NOT WORKING ***************************/
 }
 
 .left__side::-webkit-scrollbar,
@@ -52,12 +52,13 @@
 }
 
 .out-of-stock{
-    color: red;
+    color: var(--color-alert);
 }
 
 .size{
     display: flex;
     justify-content: space-between;
+    border: 1px solid transparent;
 }
 
 .size li{
@@ -68,6 +69,13 @@
     width: 100%;
     padding-block: .7em;
     border: 1px solid var(--color-gray);
+}
+
+.alert-sizes{
+    background-color: var(--color-alert);
+    font-size: .8em;
+    padding: 1em;
+    margin-top: 2em;
 }
 
 button.active{
@@ -88,12 +96,19 @@ button.not-available{
 }
 
 .bag__wishlist .add{
-    background-color: var(--bg-light);
+    background-color: var(--color-green);
     width: 100%;
-    padding: .5em;
+    padding-block: 1em;
     text-align: center;
 }
 
+.bag__wishlist .like{
+    margin-right: .5em;
+}
+
+.bag__wishlist .like i{
+    font-size: 1.5em;
+}
 
 .accordion{
     position: relative;
@@ -133,8 +148,41 @@ label{
     font-size: .8em;
 }
 
+.accordion__content__container table{
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+.accordion__content__container table,
+.accordion__content__container table td,
+.accordion__content__container table th{
+    border: 1px solid var(--color-gray);
+}
+
+.accordion__content__container table td{
+    text-align: center;
+    padding-block: .5em;
+}
+
 input:checked ~ .accordion__content__container{
     max-height: fit-content;
+}
+
+.accordion .how-to-container{
+    display: flex;
+    gap: 1em;
+}
+
+.accordion .how-to .how-to-left{
+    max-width: 20em;
+}
+
+.accordion .how-to-container h4{
+    font-size: 1.2em;
+}
+
+.accordion .how-to-container h4:not(:first-child){
+    margin-top: 1em;
 }
 
 .accordion .links{
@@ -147,11 +195,6 @@ input:checked ~ .accordion__content__container{
     font-weight: bold;
 }
 
-@media (max-width: 450px) {
-    .accordion .links button{
-        font-size: .7em;
-    }
-}
 
 .accordion .links button.active{
     text-decoration: underline;
@@ -164,6 +207,21 @@ input:checked ~ .accordion__content__container{
 .accordion .links + .content .section.active{
     display: block;
 }
+
+@media (max-width: 450px) {
+    .accordion .links button{
+        font-size: .7em;
+    }
+
+    .accordion .how-to-container{
+        flex-direction: column;
+    }
+
+    .accordion .links{
+        flex-direction: column;
+    }
+}
+
 
 @media (max-width: 1200px) {
     .section__container{

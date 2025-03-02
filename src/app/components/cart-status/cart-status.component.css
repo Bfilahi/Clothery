@@ -1,0 +1,19 @@
+.cart__container{
+    position: relative;
+}
+
+.cart .items-in-cart{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.cart .fa-briefcase{
+    position: relative;
+    z-index: -1;
+}
+
+.cart.active .fa-briefcase{
+    color: var(--color-green);
+}

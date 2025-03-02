@@ -18,6 +18,10 @@ export class ProductsComponent implements OnInit {
   pageSize: number = 5;
   totalElements: number = 0;
 
+  previousKeyword: string = '';
+
+  isLoading: boolean = true;
+
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute,
@@ -43,11 +47,21 @@ export class ProductsComponent implements OnInit {
   searchProducts(){
     const keyword: string = this.route.snapshot.paramMap.get('keyword')!;
 
+    if(this.previousKeyword != keyword){
+      this.previousKeyword = keyword;
+
+      this.products = [];
+      this.totalElements = 0;
+      this.currentPage = 0;
+    }
+
     this.productService.searchProducts(keyword, this.currentPage, this.pageSize).subscribe(
       data => {
         this.products = [...this.products, ...data._embedded.products];
         this.totalElements = data.page.totalElements;
         this.currentPage++;
+
+        this.isLoading = false;
       }
     );
   }
@@ -60,6 +74,8 @@ export class ProductsComponent implements OnInit {
         this.products = [...this.products, ...data._embedded.products];
         this.totalElements = data.page.totalElements;
         this.currentPage++;
+
+        this.isLoading = false;
       }
     );
   }
@@ -72,6 +88,8 @@ export class ProductsComponent implements OnInit {
         this.products = [...this.products, ...data._embedded.products];
         this.totalElements = data.page.totalElements;
         this.currentPage++;
+
+        this.isLoading = false;
       }
     );
   }
