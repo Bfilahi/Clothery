@@ -10,32 +10,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">    
 </head>
 <body>
-
-    <!-- 
-        * add a gif loader when requesting products so the user can tell when something is happening.
-        * add the url at the top of every page.
-
-        * solve the browser error that occurs whenever you select a product.
-        * wishlist not done yet. ==> if the user not logged in, remove the sign-in button.
-    -->
-
-    <!-- 
-        TODAY:
-        * if it's possible, make the country code related to the chosen country.
-    -->
     
-    <header id="header">
+    <header id="header" *ngIf="showHeader">
         <a routerLink="/home" class="logo">Clothery</a>
 
          <app-search class="search"></app-search>
 
         <nav>
             <ul class="nav__wrapper">
-                <li class="nav__link">
-                    <a href="#" class="account">
-                        <i class="fa-solid fa-user"></i>
-                    </a>
-                </li>
+                <app-login-status></app-login-status>
 
                 <app-wishlist-status></app-wishlist-status>
                 
@@ -45,9 +28,7 @@
     </header>
 
     <main>
-
         <router-outlet></router-outlet>
-
     </main>
 
 
@@ -56,64 +37,45 @@
             <ul class="card">
                 <h3 class="card__title">CUSTOMER CARE</h3>
                 <li class="link">
-                    <a href="#">CONTACT</a>
+                    <a routerLink="/shipping">DELIVERY & SHIPPING</a>
                 </li>
                 <li class="link">
-                    <a href="#">DELIVERY & SHIPPING</a>
+                    <a routerLink="/returns">RETURNS</a>
                 </li>
                 <li class="link">
-                    <a href="#">RETURNS</a>
-                </li>
-                <li class="link">
-                    <a href="#">FAQ</a>
-                </li>
-                <li class="link">
-                    <a href="#"></a>
+                    <a routerLink="/faq">FAQ</a>
                 </li>
             </ul>
 
             <ul class="card">
                 <h3 class="card__title">INFO</h3>
                 <li class="link">
-                    <a href="#">SIZE GUIDE</a>
+                    <a routerLink="/size-guide">SIZE GUIDE</a>
                 </li>
                 <li class="link">
-                    <a href="#">TERMS & CONDITIONS</a>
+                    <a routerLink="/terms-conditions">TERMS & CONDITIONS</a>
                 </li>
                 <li class="link">
-                    <a href="#">PRIVACY POLICY</a>
+                    <a routerLink="/privacy-policy">PRIVACY POLICY</a>
                 </li>
             </ul>
 
             <ul class="card">
                 <h3 class="card__title">CONNECT</h3>
                 <li class="link">
-                    <a href="#">INSTAGRAM</a>
+                    <a href="https://www.instagram.com" target="_blank">INSTAGRAM</a>
                 </li>
                 <li class="link">
-                    <a href="#">FACEBOOK</a>
+                    <a href="https://www.facebook.com" target="_blank">FACEBOOK</a>
                 </li>
                 <li class="link">
-                    <a href="#">YOUTUBE</a>
+                    <a href="https://www.youtube.com" target="_blank">YOUTUBE</a>
                 </li>
                 <li class="link">
-                    <a href="#">PINTEREST</a>
+                    <a href="https://www.pinterest.com" target="_blank">PINTEREST</a>
                 </li>
                 <li class="link">
-                    <a href="#">TIKTOK</a>
-                </li>
-            </ul>
-
-            <ul class="card">
-                <h3 class="card__title">SUBSCRIBE</h3>
-                <li>
-                    <p>Sign up & be the first to know about new arrivals & promotions</p>
-                </li>
-                <li>
-                    <a href="#" class="sign-up-btn btn">
-                        SIGN UP 
-                        <span><i class="fa-solid fa-arrow-right"></i></span>
-                    </a>
+                    <a href="https://www.tiktok.com" target="_blank">TIKTOK</a>
                 </li>
             </ul>
         </div>

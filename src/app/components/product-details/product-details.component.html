@@ -27,7 +27,8 @@
             <p *ngIf="!isSizeSelected && wasAddToCartPressed" class="alert-sizes">Please select from the available size options</p>
 
             <div class="bag__wishlist">
-                <button class="add" (click)="addToCart(product)">ADD TO CART</button>
+                <button class="add" (click)="addToCart(product, $event)">ADD TO CART</button>
+
                 <button class="like" (click)="addToWishList(product)">
                     <i *ngIf="!existsInWishlist; else exists" class="fa-regular fa-heart"></i>
                     <ng-template #exists>

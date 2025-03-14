@@ -4,21 +4,32 @@ import { WishlistItem } from '../common/wishlist-item';
 @Injectable({
   providedIn: 'root'
 })
+
 export class WishlistService {
 
   wishlistItems: WishlistItem[] = [];
 
+  storage: Storage = localStorage;
+
+  constructor(){
+    const data = JSON.parse(this.storage.getItem('wishlistItems')!);
+
+    if(data != null)
+      this.wishlistItems = data;
+  }
+
   addToWishList(wishlistItem: WishlistItem){
     if(!this.isItemInWishlist(wishlistItem)){
-
       this.wishlistItems.push(wishlistItem);
 
-      console.log(wishlistItem.productSizes)
+      this.updateStorage();
     }
   }
 
   removeFromWishlist(wishlistItem: WishlistItem){
     this.wishlistItems.splice(this.wishlistItems.indexOf(wishlistItem), 1);
+
+    this.updateStorage();
   }
 
   isItemInWishlist(wishlistItem: WishlistItem): boolean{
@@ -29,5 +40,9 @@ export class WishlistService {
       return isAlreadyInWishlist;
     }
     return false;
+  }
+
+  updateStorage(){
+    this.storage.setItem('wishlistItems', JSON.stringify(this.wishlistItems));
   }
 }

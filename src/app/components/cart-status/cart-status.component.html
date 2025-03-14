@@ -1,5 +1,5 @@
 <li class="nav__link cart__container">
-    <a routerLink="/cart-details" class="cart" [ngClass]="{'active': totalQuantity > 0}">
+    <a routerLink="/cart-details" class="cart" [ngClass]="{'active': totalQuantity > 0}" (mouseenter)="showQuickCart()" >
         <p *ngIf="totalQuantity > 0" class="items-in-cart">{{ totalQuantity }}</p>
         <i class="fa-solid fa-briefcase"></i>
     </a>

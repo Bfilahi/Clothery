@@ -1,246 +1,255 @@
-formGroupName<div class="section__container" (submit)="onSubmit()">
-    <form [formGroup]="checkoutFormGroup" class="form">
-        <div class="email" formGroupName="customer">
-            <span>
-                <h3>Contact</h3>
-                <a href="#">Log in</a>
-            </span>
-            <input formControlName="email" type="email" name="email" id="email" placeholder="Email">
-            <ng-container *ngIf="checkoutFormGroup.get('email')?.touched && checkoutFormGroup.get('email')?.dirty">
-                <p class="input__error" *ngIf="checkoutFormGroup.get('email')?.errors?.['required']">
-                    Field required.
-                </p>
-                <p class="input__error" *ngIf="checkoutFormGroup.get('email')?.errors?.['pattern']">
-                    Enter a valid email.
-                </p>
-            </ng-container>
-        </div>
-    
-        <div class="shipping" formGroupName="shippingAddress">
-            <h3>Delivery</h3>
-            <select formControlName="country" id="countryShipping" (change)="getCities('shippingAddress')">
-                <option [ngValue]="country" *ngFor="let country of countries"> {{ country.name }} </option>
-            </select>
-            <ng-container *ngIf="checkoutFormGroup.get('shippingAddress.country')?.touched && checkoutFormGroup.get('shippingAddress.country')?.dirty">
-                <p class="input__error" *ngIf="checkoutFormGroup.get('shippingAddress.country')?.errors?.['required']">
-                    Field required
-                </p>
-            </ng-container>
-            
-    
-            <div class="container">
-                <div>
-                    <input formControlName="firstName" type="text" id="firstNameShipping" placeholder="First name">
-                    <ng-container *ngIf="checkoutFormGroup.get('shippingAddress.firstName')?.touched && checkoutFormGroup.get('shippingAddress.firstName')?.dirty">
-                        <p class="input__error" 
-                            *ngIf="checkoutFormGroup.get('shippingAddress.firstName')?.errors?.['required'] || checkoutFormGroup.get('shippingAddress.firstName')?.errors?.['notOnlyWhiteSpace']">
-                            Field required.
-                        </p>
-                        <p class="input__error" *ngIf="checkoutFormGroup.get('shippingAddress.firstName')?.errors?.['minlength']">
-                            The value you inputted is {{ checkoutFormGroup.get('shippingAddress.firstName')?.errors?.['minlength'].actualLength }} 
-                            characters long.
-                            It must be at least {{ checkoutFormGroup.get('shippingAddress.firstName')?.errors?.['minlength'].requiredLength }} 
-                            characters long.
-                        </p>
-                    </ng-container>
-                </div>
-
-                <div>
-                    <input formControlName="lastName" type="text" id="lastNameShipping" placeholder="Last name">
-                    <ng-container *ngIf="checkoutFormGroup.get('shippingAddress.lastName')?.touched && checkoutFormGroup.get('shippingAddress.lastName')?.dirty">
-                        <p class="input__error" 
-                            *ngIf="checkoutFormGroup.get('shippingAddress.lastName')?.errors?.['required'] || checkoutFormGroup.get('shippingAddress.lastName')?.errors?.['notOnlyWhiteSpace']">
-                            Field required.
-                        </p>
-                        <p class="input__error" *ngIf="checkoutFormGroup.get('shippingAddress.lastName')?.errors?.['minlength']">
-                            The value you inputted is {{ checkoutFormGroup.get('shippingAddress.lastName')?.errors?.['minlength'].actualLength }} 
-                            characters long.
-                            It must be at least {{ checkoutFormGroup.get('shippingAddress.lastName')?.errors?.['minlength'].requiredLength }} 
-                            characters long.
-                        </p>
-                    </ng-container>
-                </div>
+<div class="section__container" (submit)="onSubmit()">
+    <a routerLink="/home" class="logo">Clothery</a>
+    <div class="wrapper">
+        <form [formGroup]="checkoutFormGroup" class="form">
+            <div class="email" formGroupName="customer">
+                <span>
+                    <h3>Contact</h3>
+                    <a routerLink="/login" *ngIf="!isAuthenticated">Log in</a>
+                </span>
+                <input formControlName="email" type="email" name="email" id="email" placeholder="Email">
+                <ng-container *ngIf="checkoutFormGroup.get('email')?.touched && checkoutFormGroup.get('email')?.dirty">
+                    <p class="input__error" *ngIf="checkoutFormGroup.get('email')?.errors?.['required']">
+                        Field required.
+                    </p>
+                    <p class="input__error" *ngIf="checkoutFormGroup.get('email')?.errors?.['pattern']">
+                        Enter a valid email.
+                    </p>
+                </ng-container>
             </div>
-    
-            <input formControlName="street" type="text" id="streetShipping" placeholder="Address">
-            <ng-container *ngIf="checkoutFormGroup.get('shippingAddress.street')?.touched && checkoutFormGroup.get('shippingAddress.street')?.dirty">
-                <p class="input__error" 
-                    *ngIf="checkoutFormGroup.get('shippingAddress.street')?.errors?.['required'] || checkoutFormGroup.get('shippingAddress.street')?.errors?.['notOnlyWhiteSpace']">
-                    Field required.
-                </p>
-            </ng-container>
-    
-            <div class="container">
-                <div>
-                    <input formControlName="zipCode" type="number" inputmode="numeric" mask="00000" id="zipCodeShipping" placeholder="Zip code">
-                    <ng-container *ngIf="checkoutFormGroup.get('shippingAddress.zipCode')?.touched && checkoutFormGroup.get('shippingAddress.zipCode')?.dirty">
-                        <p class="input__error" *ngIf="checkoutFormGroup.get('shippingAddress.zipCode')?.errors?.['required']">
-                            Field required.
-                        </p>
-                    </ng-container>
-                </div>
-
-                <div>
-                    <select formControlName="city" id="cityShipping" placeholder="City">
-                        <option [ngValue]="city" *ngFor="let city of citiesShipping">{{ city.name }}</option>
-                    </select>
-                </div>
-            </div>
-    
-            <input formControlName="phone" 
-                mask="+00 0000 000000" 
-                type="text" 
-                id="phoneShipping" 
-                placeholder="Phone  +00 0000 000000"
-                [dropSpecialCharacters]="false">
-            <ng-container *ngIf="checkoutFormGroup.get('shippingAddress.phone')?.touched && checkoutFormGroup.get('shippingAddress.phone')?.dirty">
-                <p class="input__error" *ngIf="checkoutFormGroup.get('shippingAddress.phone')?.errors?.['required']">
-                    Field required.
-                </p>
-                <p class="input__error" *ngIf="checkoutFormGroup.get('shippingAddress.phone')?.errors?.['minlength']">
-                    The value you inputted is {{ checkoutFormGroup.get('shippingAddress.phone')?.errors?.['minlength'].actualLength }} 
-                    characters long.
-                    It must be at least {{ checkoutFormGroup.get('shippingAddress.phone')?.errors?.['minlength'].requiredLength }} 
-                    characters long.
-                </p>
-                <p class="input__error" *ngIf="checkoutFormGroup.get('shippingAddress.phone')?.errors?.['maxlength']">
-                    The value you inputted is {{ checkoutFormGroup.get('shippingAddress.phone')?.errors?.['maxlength'].actualLength }} 
-                    characters long.
-                    It must be at most {{ checkoutFormGroup.get('shippingAddress.phone')?.errors?.['maxlength'].requiredLength }} 
-                    characters long.
-                </p>
-            </ng-container>
-        </div>
-    
-        <div class="payment">
-            <h3>Payment</h3>
-    
-            <!-- *********************  STRIPE GOES HERE ******************** -->
-    
-            <div class="container checkoutBtn__container">
-                <input type="checkbox" id="billingAddressBtn" (change)="copyShippingAddressToBillingAddress($event)">
-                <label for="billingAddressBtn">Use shipping address as billing address</label>
-            </div>
-
-            <div class="billing" formGroupName="billingAddress">
-                <h3>Billing address</h3>
-                <select formControlName="country" id="countryBilling" (change)="getCities('billingAddress')">
-                    <option [ngValue]="country" *ngFor="let country of countries">{{ country.name }}</option>
+        
+            <div class="shipping" formGroupName="shippingAddress">
+                <h3>Delivery</h3>
+                <select formControlName="country" id="countryShipping" (change)="getCities('shippingAddress')">
+                    <option [ngValue]="country" *ngFor="let country of countries"> {{ country.name }} </option>
                 </select>
-                <ng-container *ngIf="checkoutFormGroup.get('billingAddress.country')?.touched && checkoutFormGroup.get('billingAddress.country')?.dirty">
-                    <p class="input__error" *ngIf="checkoutFormGroup.get('billingAddress.country')?.errors?.['required']">
+                <ng-container *ngIf="checkoutFormGroup.get('shippingAddress.country')?.touched && checkoutFormGroup.get('shippingAddress.country')?.dirty">
+                    <p class="input__error" *ngIf="checkoutFormGroup.get('shippingAddress.country')?.errors?.['required']">
                         Field required
                     </p>
                 </ng-container>
+                
         
                 <div class="container">
                     <div>
-                        <input formControlName="firstName" type="text" id="firstNameBilling" placeholder="First name">
-                        <ng-container *ngIf="checkoutFormGroup.get('billingAddress.firstName')?.touched && checkoutFormGroup.get('billingAddress.firstName')?.dirty">
+                        <input formControlName="firstName" type="text" id="firstNameShipping" placeholder="First name">
+                        <ng-container *ngIf="checkoutFormGroup.get('shippingAddress.firstName')?.touched && checkoutFormGroup.get('shippingAddress.firstName')?.dirty">
                             <p class="input__error" 
-                            *ngIf="checkoutFormGroup.get('billingAddress.firstName')?.errors?.['required'] || checkoutFormGroup.get('billingAddress.firstName')?.errors?.['notOnlyWhiteSpace']">
+                                *ngIf="checkoutFormGroup.get('shippingAddress.firstName')?.errors?.['required'] || checkoutFormGroup.get('shippingAddress.firstName')?.errors?.['notOnlyWhiteSpace']">
                                 Field required.
                             </p>
-                            <p class="input__error" *ngIf="checkoutFormGroup.get('billingAddress.firstName')?.errors?.['minlength']">
-                                The value you inputted is {{ checkoutFormGroup.get('billingAddress.firstName')?.errors?.['minlength'].actualLength }} 
+                            <p class="input__error" *ngIf="checkoutFormGroup.get('shippingAddress.firstName')?.errors?.['minlength']">
+                                The value you inputted is {{ checkoutFormGroup.get('shippingAddress.firstName')?.errors?.['minlength'].actualLength }} 
                                 characters long.
-                                It must be at least {{ checkoutFormGroup.get('billingAddress.firstName')?.errors?.['minlength'].requiredLength }} 
+                                It must be at least {{ checkoutFormGroup.get('shippingAddress.firstName')?.errors?.['minlength'].requiredLength }} 
                                 characters long.
                             </p>
                         </ng-container>
                     </div>
-                    
+
                     <div>
-                        <input formControlName="lastName" type="text" id="lastNameBilling" placeholder="Last name">
-                        <ng-container *ngIf="checkoutFormGroup.get('billingAddress.lastName')?.touched && checkoutFormGroup.get('billingAddress.lastName')?.dirty">
+                        <input formControlName="lastName" type="text" id="lastNameShipping" placeholder="Last name">
+                        <ng-container *ngIf="checkoutFormGroup.get('shippingAddress.lastName')?.touched && checkoutFormGroup.get('shippingAddress.lastName')?.dirty">
                             <p class="input__error" 
-                                *ngIf="checkoutFormGroup.get('billingAddress.lastName')?.errors?.['required'] || checkoutFormGroup.get('billingAddress.lastName')?.errors?.['notOnlyWhiteSpace']">
+                                *ngIf="checkoutFormGroup.get('shippingAddress.lastName')?.errors?.['required'] || checkoutFormGroup.get('shippingAddress.lastName')?.errors?.['notOnlyWhiteSpace']">
                                 Field required.
                             </p>
-                            <p class="input__error" *ngIf="checkoutFormGroup.get('billingAddress.lastName')?.errors?.['minlength']">
-                                The value you inputted is {{ checkoutFormGroup.get('billingAddress.lastName')?.errors?.['minlength'].actualLength }} 
+                            <p class="input__error" *ngIf="checkoutFormGroup.get('shippingAddress.lastName')?.errors?.['minlength']">
+                                The value you inputted is {{ checkoutFormGroup.get('shippingAddress.lastName')?.errors?.['minlength'].actualLength }} 
                                 characters long.
-                                It must be at least {{ checkoutFormGroup.get('billingAddress.lastName')?.errors?.['minlength'].requiredLength }} 
+                                It must be at least {{ checkoutFormGroup.get('shippingAddress.lastName')?.errors?.['minlength'].requiredLength }} 
                                 characters long.
                             </p>
                         </ng-container>
                     </div>
                 </div>
         
-                <input formControlName="street" type="text" id="billingAddress" placeholder="Address">
-                <ng-container *ngIf="checkoutFormGroup.get('billingAddress.street')?.touched && checkoutFormGroup.get('billingAddress.street')?.dirty">
+                <input formControlName="street" type="text" id="streetShipping" placeholder="Address">
+                <ng-container *ngIf="checkoutFormGroup.get('shippingAddress.street')?.touched && checkoutFormGroup.get('shippingAddress.street')?.dirty">
                     <p class="input__error" 
-                        *ngIf="checkoutFormGroup.get('billingAddress.street')?.errors?.['required'] || checkoutFormGroup.get('billingAddress.street')?.errors?.['notOnlyWhiteSpace']">
+                        *ngIf="checkoutFormGroup.get('shippingAddress.street')?.errors?.['required'] || checkoutFormGroup.get('shippingAddress.street')?.errors?.['notOnlyWhiteSpace']">
                         Field required.
                     </p>
                 </ng-container>
         
                 <div class="container">
                     <div>
-                        <input formControlName="zipCode" type="number" inputmode="numeric" mask="00000" id="zipCodeBilling" placeholder="Zip code">
-                        <ng-container *ngIf="checkoutFormGroup.get('billingAddress.zipCode')?.touched && checkoutFormGroup.get('billingAddress.zipCode')?.dirty">
-                            <p class="input__error" *ngIf="checkoutFormGroup.get('billingAddress.zipCode')?.errors?.['required']">
+                        <input formControlName="zipCode" type="number" inputmode="numeric" mask="00000" id="zipCodeShipping" placeholder="Zip code">
+                        <ng-container *ngIf="checkoutFormGroup.get('shippingAddress.zipCode')?.touched && checkoutFormGroup.get('shippingAddress.zipCode')?.dirty">
+                            <p class="input__error" *ngIf="checkoutFormGroup.get('shippingAddress.zipCode')?.errors?.['required']">
                                 Field required.
                             </p>
                         </ng-container>
                     </div>
-                    
+
                     <div>
-                        <select formControlName="city" id="cityBilling" placeholder="City">
-                            <option [ngValue]="city" *ngFor="let city of citiesBilling">{{ city.name }}</option>
+                        <select formControlName="city" id="cityShipping" placeholder="City">
+                            <option [ngValue]="city" *ngFor="let city of citiesShipping">{{ city.name }}</option>
                         </select>
                     </div>
                 </div>
         
-                <input formControlName="phone" mask="+00 0000 000000" type="text" id="phoneBilling" placeholder="Phone  +00 0000 000000">
-                <ng-container *ngIf="checkoutFormGroup.get('billingAddress.phone')?.touched && checkoutFormGroup.get('billingAddress.phone')?.dirty">
-                    <p class="input__error" *ngIf="checkoutFormGroup.get('billingAddress.phone')?.errors?.['required']">
+                <input formControlName="phone" 
+                    mask="+00 0000 000000" 
+                    type="text" 
+                    id="phoneShipping" 
+                    placeholder="Phone  +00 0000 000000"
+                    [dropSpecialCharacters]="false">
+                <ng-container *ngIf="checkoutFormGroup.get('shippingAddress.phone')?.touched && checkoutFormGroup.get('shippingAddress.phone')?.dirty">
+                    <p class="input__error" *ngIf="checkoutFormGroup.get('shippingAddress.phone')?.errors?.['required']">
                         Field required.
                     </p>
-                    <p class="input__error" *ngIf="checkoutFormGroup.get('billingAddress.phone')?.errors?.['minlength']">
-                        The value you inputted is {{ checkoutFormGroup.get('billingAddress.phone')?.errors?.['minlength'].actualLength }} 
+                    <p class="input__error" *ngIf="checkoutFormGroup.get('shippingAddress.phone')?.errors?.['minlength']">
+                        The value you inputted is {{ checkoutFormGroup.get('shippingAddress.phone')?.errors?.['minlength'].actualLength }} 
                         characters long.
-                        It must be at least {{ checkoutFormGroup.get('billingAddress.phone')?.errors?.['minlength'].requiredLength }} 
+                        It must be at least {{ checkoutFormGroup.get('shippingAddress.phone')?.errors?.['minlength'].requiredLength }} 
                         characters long.
                     </p>
-                    <p class="input__error" *ngIf="checkoutFormGroup.get('billingAddress.phone')?.errors?.['maxlength']">
-                        The value you inputted is {{ checkoutFormGroup.get('billingAddress.phone')?.errors?.['maxlength'].actualLength }} 
+                    <p class="input__error" *ngIf="checkoutFormGroup.get('shippingAddress.phone')?.errors?.['maxlength']">
+                        The value you inputted is {{ checkoutFormGroup.get('shippingAddress.phone')?.errors?.['maxlength'].actualLength }} 
                         characters long.
-                        It must be at most {{ checkoutFormGroup.get('billingAddress.phone')?.errors?.['maxlength'].requiredLength }} 
+                        It must be at most {{ checkoutFormGroup.get('shippingAddress.phone')?.errors?.['maxlength'].requiredLength }} 
                         characters long.
                     </p>
                 </ng-container>
             </div>
-        </div>
-    
-        <button type="submit" class="checkout" [disabled]="checkoutFormGroup.invalid" [ngClass]="{'active': checkoutFormGroup.valid}">
-            PAY NOW
-        </button>
-    </form>
+        
+            <div class="payment">
+                <div class="stripe" formGroupName="payment">
+                    <h3>Payment</h3>
+                    <div id="card-element">
 
-    <div class="purchase__details">
-        <h3 class="total__products">{{ totalQuantity }} PRODUCTS</h3>
-
-        <ul class="products__wrapper">
-            <li class="product" *ngFor="let item of cartItems">
-                <div class="img__container">
-                    <img src="{{ item.imgUrl }}" alt="">
-                </div>
-                <div class="info__container">
-                    <p class="price">{{ item.unitPrice | currency: 'EUR'}}</p>
-                    <p class="description">{{ item.description }}</p>
-
-                    <div class="container">
-                        <p class="size">Size: <span>{{ item.selectedSize }}</span></p>
-                        <p class="quantity">Qty: <span>{{ item.quantity }}</span></p>
                     </div>
+                    <div id="card-errors"></div>
                 </div>
-            </li>
-        </ul>
+        
+                
+        
+                <div class="container checkoutBtn__container">
+                    <input type="checkbox" id="billingAddressBtn" (change)="copyShippingAddressToBillingAddress($event)">
+                    <label for="billingAddressBtn">Use shipping address as billing address</label>
+                </div>
 
-        <p class="total__price">
-            <span>TOTAL</span>
-            <span>{{ totalPrice | currency: 'EUR'}}</span>
-        </p>
+                <div class="billing" formGroupName="billingAddress">
+                    <h3>Billing address</h3>
+                    <select formControlName="country" id="countryBilling" (change)="getCities('billingAddress')">
+                        <option [ngValue]="country" *ngFor="let country of countries">{{ country.name }}</option>
+                    </select>
+                    <ng-container *ngIf="checkoutFormGroup.get('billingAddress.country')?.touched && checkoutFormGroup.get('billingAddress.country')?.dirty">
+                        <p class="input__error" *ngIf="checkoutFormGroup.get('billingAddress.country')?.errors?.['required']">
+                            Field required
+                        </p>
+                    </ng-container>
+            
+                    <div class="container">
+                        <div>
+                            <input formControlName="firstName" type="text" id="firstNameBilling" placeholder="First name">
+                            <ng-container *ngIf="checkoutFormGroup.get('billingAddress.firstName')?.touched && checkoutFormGroup.get('billingAddress.firstName')?.dirty">
+                                <p class="input__error" 
+                                *ngIf="checkoutFormGroup.get('billingAddress.firstName')?.errors?.['required'] || checkoutFormGroup.get('billingAddress.firstName')?.errors?.['notOnlyWhiteSpace']">
+                                    Field required.
+                                </p>
+                                <p class="input__error" *ngIf="checkoutFormGroup.get('billingAddress.firstName')?.errors?.['minlength']">
+                                    The value you inputted is {{ checkoutFormGroup.get('billingAddress.firstName')?.errors?.['minlength'].actualLength }} 
+                                    characters long.
+                                    It must be at least {{ checkoutFormGroup.get('billingAddress.firstName')?.errors?.['minlength'].requiredLength }} 
+                                    characters long.
+                                </p>
+                            </ng-container>
+                        </div>
+                        
+                        <div>
+                            <input formControlName="lastName" type="text" id="lastNameBilling" placeholder="Last name">
+                            <ng-container *ngIf="checkoutFormGroup.get('billingAddress.lastName')?.touched && checkoutFormGroup.get('billingAddress.lastName')?.dirty">
+                                <p class="input__error" 
+                                    *ngIf="checkoutFormGroup.get('billingAddress.lastName')?.errors?.['required'] || checkoutFormGroup.get('billingAddress.lastName')?.errors?.['notOnlyWhiteSpace']">
+                                    Field required.
+                                </p>
+                                <p class="input__error" *ngIf="checkoutFormGroup.get('billingAddress.lastName')?.errors?.['minlength']">
+                                    The value you inputted is {{ checkoutFormGroup.get('billingAddress.lastName')?.errors?.['minlength'].actualLength }} 
+                                    characters long.
+                                    It must be at least {{ checkoutFormGroup.get('billingAddress.lastName')?.errors?.['minlength'].requiredLength }} 
+                                    characters long.
+                                </p>
+                            </ng-container>
+                        </div>
+                    </div>
+            
+                    <input formControlName="street" type="text" id="billingAddress" placeholder="Address">
+                    <ng-container *ngIf="checkoutFormGroup.get('billingAddress.street')?.touched && checkoutFormGroup.get('billingAddress.street')?.dirty">
+                        <p class="input__error" 
+                            *ngIf="checkoutFormGroup.get('billingAddress.street')?.errors?.['required'] || checkoutFormGroup.get('billingAddress.street')?.errors?.['notOnlyWhiteSpace']">
+                            Field required.
+                        </p>
+                    </ng-container>
+            
+                    <div class="container">
+                        <div>
+                            <input formControlName="zipCode" type="number" inputmode="numeric" mask="00000" id="zipCodeBilling" placeholder="Zip code">
+                            <ng-container *ngIf="checkoutFormGroup.get('billingAddress.zipCode')?.touched && checkoutFormGroup.get('billingAddress.zipCode')?.dirty">
+                                <p class="input__error" *ngIf="checkoutFormGroup.get('billingAddress.zipCode')?.errors?.['required']">
+                                    Field required.
+                                </p>
+                            </ng-container>
+                        </div>
+                        
+                        <div>
+                            <select formControlName="city" id="cityBilling" placeholder="City">
+                                <option [ngValue]="city" *ngFor="let city of citiesBilling">{{ city.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+            
+                    <input formControlName="phone" mask="+00 0000 000000" type="text" id="phoneBilling" placeholder="Phone  +00 0000 000000">
+                    <ng-container *ngIf="checkoutFormGroup.get('billingAddress.phone')?.touched && checkoutFormGroup.get('billingAddress.phone')?.dirty">
+                        <p class="input__error" *ngIf="checkoutFormGroup.get('billingAddress.phone')?.errors?.['required']">
+                            Field required.
+                        </p>
+                        <p class="input__error" *ngIf="checkoutFormGroup.get('billingAddress.phone')?.errors?.['minlength']">
+                            The value you inputted is {{ checkoutFormGroup.get('billingAddress.phone')?.errors?.['minlength'].actualLength }} 
+                            characters long.
+                            It must be at least {{ checkoutFormGroup.get('billingAddress.phone')?.errors?.['minlength'].requiredLength }} 
+                            characters long.
+                        </p>
+                        <p class="input__error" *ngIf="checkoutFormGroup.get('billingAddress.phone')?.errors?.['maxlength']">
+                            The value you inputted is {{ checkoutFormGroup.get('billingAddress.phone')?.errors?.['maxlength'].actualLength }} 
+                            characters long.
+                            It must be at most {{ checkoutFormGroup.get('billingAddress.phone')?.errors?.['maxlength'].requiredLength }} 
+                            characters long.
+                        </p>
+                    </ng-container>
+                </div>
+            </div>
+        
+            <button type="submit" class="checkout" [disabled]="isDisabled" [ngClass]="{'active': checkoutFormGroup.valid && isStripeValid}">
+                PAY NOW
+            </button>
+        </form>
+
+        <div class="purchase__details">
+            <h3 class="total__products">{{ totalQuantity }} PRODUCTS</h3>
+
+            <ul class="products__wrapper">
+                <li class="product" *ngFor="let item of cartItems">
+                    <div class="img__container">
+                        <img src="{{ item.imgUrl }}" alt="">
+                    </div>
+                    <div class="info__container">
+                        <p class="price">{{ item.unitPrice | currency: 'EUR'}}</p>
+                        <p class="description">{{ item.description }}</p>
+
+                        <div class="container">
+                            <p class="size">Size: <span>{{ item.selectedSize }}</span></p>
+                            <p class="quantity">Qty: <span>{{ item.quantity }}</span></p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <p class="total__price">
+                <span>TOTAL</span>
+                <span>{{ totalPrice | currency: 'EUR'}}</span>
+            </p>
+        </div>
     </div>
 </div>

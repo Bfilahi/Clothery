@@ -1,0 +1,81 @@
+.section__container{
+    max-width: 50em;
+    margin-inline: auto;
+}
+
+.section__container h1{
+    margin-block: 1em;
+    text-transform: uppercase;
+}
+
+input{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+}
+
+label{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+
+    border: 1px solid var(--color-gray);
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    padding: .5em;
+}
+
+.accordion__content__container{
+    max-height: 0px;
+    overflow: hidden;
+    box-shadow: 0 0px 4px var(--color-gray);
+}
+
+.accordion__content__container p{
+    margin: .5em 0 1em;
+}
+
+.accordion__content__container .content{
+    padding: 1em;
+    font-size: .8em;
+}
+
+.accordion__content__container table{
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+    font-size: 1.5em;
+}
+.accordion__content__container table,
+.accordion__content__container table td,
+.accordion__content__container table th{
+    border: 1px solid var(--color-gray);
+}
+
+.accordion__content__container table td{
+    text-align: center;
+    padding-block: .5em;
+}
+
+.accordion__content__container table th{
+    font-weight: bold;
+    padding: .5em;
+}
+
+.accordion__content__container table tbody th{
+    text-align: left;
+}
+
+.accordion__content__container table tr:nth-child(even){
+    background-color: var(--bg-light);
+}
+
+input:checked ~ .accordion__content__container{
+    max-height: fit-content;
+    padding-block: 1em;
+}

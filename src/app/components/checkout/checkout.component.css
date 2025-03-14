@@ -1,8 +1,19 @@
 .section__container{
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3em;
+}
+
+.wrapper{
+    display: flex;
     align-items: flex-start;
     justify-content: center;
     gap: 2em;
+}
+
+.logo{
+    font-size: 1.5em;
 }
 
 .form{
@@ -23,6 +34,17 @@
 .shipping h3,
 .payment h3{
     margin-top: 1em;
+}
+
+#card-element{
+    margin-block: 2em .5em;
+    padding: .8em .6em;
+    border: 1px solid var(--color-gray);
+}
+
+#card-errors{
+    font-size: .8em;
+    color: var(--color-alert);
 }
 
 .form input:not(input[type='checkbox']),
@@ -102,6 +124,7 @@
 
 
 .purchase__details{
+    position: sticky;
     display: flex;
     flex-direction: column;
     gap: 2em;

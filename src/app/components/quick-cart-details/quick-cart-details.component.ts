@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { CartItem } from '../../common/cart-item';
 
@@ -8,6 +8,7 @@ import { CartItem } from '../../common/cart-item';
   templateUrl: './quick-cart-details.component.html',
   styleUrl: './quick-cart-details.component.css'
 })
+
 export class QuickCartDetailsComponent implements OnInit{
 
   totalPrice: number = 0;
@@ -21,6 +22,13 @@ export class QuickCartDetailsComponent implements OnInit{
 
   ngOnInit(): void {
     this.handleCart();
+
+    document.addEventListener('click', (event) =>{
+      const target = event.target as HTMLElement;
+      if(target.closest('.cart__container') || target.closest('.btn-remove'))
+        return;
+      this.cartService.isCartDisplayed.next(false);
+    });
   }
 
   handleCart(){
@@ -34,10 +42,9 @@ export class QuickCartDetailsComponent implements OnInit{
 
     this.cartService.isCartDisplayed.subscribe(
       data => this.isCartDisplayed = data
-    )
+    );
 
-    // this.cartItems = this.cartService.cartItems;
-    this.cartService.cartItems.subscribe(
+    this.cartService.cartItems$.subscribe(
       data => this.cartItems = data
     );
   }
@@ -49,4 +56,5 @@ export class QuickCartDetailsComponent implements OnInit{
   removeProduct(item: CartItem){
     this.cartService.removeFromCart(item);
   }
+
 }

@@ -17,7 +17,7 @@ import { WishlistItem } from '../../common/wishlist-item';
 
 export class ProductDetailsComponent implements OnInit{
 
-  product!: Product;
+  product: Product = {} as Product;
   productDetails: Product | any;
   productImages: ProductImages[] = [];
 
@@ -78,7 +78,8 @@ export class ProductDetailsComponent implements OnInit{
     this.display = value;
   }
 
-  addToCart(product: Product){
+  addToCart(product: Product, event: Event){
+    event.stopPropagation();
     this.wasAddToCartPressed = true;
 
     if(this.isSizeSelected){
@@ -90,5 +91,6 @@ export class ProductDetailsComponent implements OnInit{
   addToWishList(product: Product){
     const wishlistItem = new WishlistItem(product);
     this.wishlistService.addToWishList(wishlistItem);
+    this.existsInWishlist = true;
   }
 }

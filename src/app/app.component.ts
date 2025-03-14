@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,17 @@ import { Component, ElementRef, OnInit, Output, ViewChild } from '@angular/core'
 export class AppComponent implements OnInit {
 
   title = 'Clothery';
+
+  showHeader: boolean = true;
+
+  constructor(private router: Router) {
+    this.router.events.subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+            
+            this.showHeader = !(event.url === '/checkout');
+        }
+    });
+  }
 
   ngOnInit(): void {
 

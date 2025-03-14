@@ -8,7 +8,6 @@
 .left__side,
 .right__side{
     width: 50%;
-    overflow-y: scroll;  /* ********************** NOT WORKING ***************************/
 }
 
 .left__side::-webkit-scrollbar,
@@ -231,7 +230,6 @@ input:checked ~ .accordion__content__container{
     .left__side,
     .right__side{
         width: 100%;
-        /* overflow-y: unset; */
     }
 
     .left__side{
@@ -243,7 +241,6 @@ input:checked ~ .accordion__content__container{
     .left__side,
     .right__side{
         width: 100%;
-        /* overflow-y: unset; */
     }
 
     .left__side{

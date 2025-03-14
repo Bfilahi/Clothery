@@ -6,6 +6,7 @@ import { CartItem } from '../../common/cart-item';
 import { Product } from '../../common/product';
 import { ProductService } from '../../services/product.service';
 import { ProductSizes } from '../../common/product-sizes';
+import { OktaAuthStateService } from '@okta/okta-angular';
 
 @Component({
   selector: 'app-wishlist',
@@ -19,13 +20,22 @@ export class WishlistComponent implements OnInit{
   productSizes: ProductSizes[] = [];
   product!: Product;
 
+  isAuthenticated: boolean = false;
+
   constructor(
     private wishlistService: WishlistService, 
     private cartService: CartService,
-    private productService: ProductService
+    private productService: ProductService,
+    private oktaAuthService: OktaAuthStateService
   ){}
 
   ngOnInit(): void {
+    this.oktaAuthService.authState$.subscribe(
+      (result) => {
+        this.isAuthenticated = result.isAuthenticated!;
+      }
+    );
+
     this.listWishlistProducts();
   }
 
@@ -46,9 +56,13 @@ export class WishlistComponent implements OnInit{
             cartItem.productSizes = this.productSizes;
             this.cartService.addToCart(cartItem);
           }
-        )
+        );
       }
     );
+  }
+
+  removeFromWishlist(item: WishlistItem){
+    this.wishlistService.removeFromWishlist(item);
   }
 
   selectSize(value: string){

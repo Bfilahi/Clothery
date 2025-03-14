@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartItem } from '../../common/cart-item';
 import { CartService } from '../../services/cart.service';
-import { ProductSizes } from '../../common/product-sizes';
 
 @Component({
   selector: 'app-cart-details',
@@ -21,6 +20,7 @@ export class CartDetailsComponent implements OnInit{
     this.updateCartDetails();
   }
 
+
   updateCartDetails(){
     this.cartService.totalPrice.subscribe(
       data => this.totalPrice = data
@@ -30,10 +30,18 @@ export class CartDetailsComponent implements OnInit{
       data => this.totalQuantity = data
     );
 
-    // this.cartItems = this.cartService.cartItems;
-    this.cartService.cartItems.subscribe(
+    this.cartService.cartItems$.subscribe(
       data => this.cartItems = data
     );
+  }
+
+  onQuantityChange(item: CartItem){
+    item.quantity = Number(item.quantity);
+    this.recalculateTotal();
+  }
+
+  recalculateTotal(){
+    this.cartService.computeCartTotals();
   }
 
   removeProduct(item: CartItem){

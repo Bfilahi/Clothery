@@ -1,7 +1,7 @@
 <div class="section__container" *ngIf="wishlistItems.length > 0">
     <ul class="products__wrapper">
         <li class="product" *ngFor="let item of wishlistItems">
-            <a href="#">
+            <a routerLink="/details/{{item.id}}">
                 <div class="img__container">
                     <img src="{{item.imgUrl}}" alt="">
                 </div>
@@ -24,6 +24,10 @@
             <button [ngClass]="{'active': selectedSize != ''}" class="btn btn-add-to-cart" (click)="moveToCart(item)">
                 MOVE TO CART
             </button>
+
+            <button class="btn-remove" (click)="removeFromWishlist(item)">
+                <i class="fa-solid fa-trash"></i>
+            </button>
         </li>
     </ul>
 </div>
@@ -33,9 +37,8 @@
     <i class="fa-solid fa-heart"></i>
     <p>You have no Saved Items</p>
 
-    <!-- If user not signed in -->
-    <div class="not-signed-in">
+    <div *ngIf="!isAuthenticated" class="not-signed-in">
         <p>Sign in to sync your Saved Items across all your devices.</p>
-        <button class="btn-sign-in">SIGN IN</button>
+        <a routerLink="/login" class="btn-sign-in">SIGN IN</a>
     </div>
 </div>

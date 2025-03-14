@@ -5,6 +5,7 @@ import { ProductCategory } from '../common/product-category';
 import { Product } from '../common/product';
 import { ProductImages } from '../common/product-images';
 import { ProductSizes } from '../common/product-sizes';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ProductService {
   searchKeyword: BehaviorSubject<string> = new BehaviorSubject<string>('');
   
   cachedProductCategories: ProductCategory[] = [];
-  baseUrl: string = 'http://localhost:8080/api';
+  baseUrl: string = environment.clotheryApi;
 
   constructor(private httpClient: HttpClient) { }
 

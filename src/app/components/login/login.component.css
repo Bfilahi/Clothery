@@ -1,0 +1,25 @@
+#okta-sign-in-widget{
+    display: grid;
+    place-items: center;
+    height: 100vh;
+}
+
+#okta-sign-in,
+#okta-sign-in.auth-container.main-container,
+#okta-sign-in.auth-container .okta-form-label,
+#okta-sign-in .o-form-head{
+    color: var(--color-white);
+}
+
+#okta-sign-in {
+    min-height: 30em;
+}
+
+#okta-sign-in.auth-container.main-container{
+    background-color: var(--bg-light);
+    border: none;
+}
+
+#okta-sign-in.auth-container .okta-sign-in-header{
+    display: none;
+}

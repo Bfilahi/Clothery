@@ -7,7 +7,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProductCategoryComponent } from './components/product-category/product-category.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
@@ -18,8 +18,26 @@ import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { LoginComponent } from './components/login/login.component';
+import { LoginStatusComponent } from './components/login-status/login-status.component';
+import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
+import { OktaAuth } from '@okta/okta-auth-js';
+import myAppConfig from './config/my-app-config';
+import { UserAccountComponent } from './components/user-account/user-account.component';
+import { SizeGuideComponent } from './components/size-guide/size-guide.component';
+import { ShippingComponent } from './components/shipping/shipping.component';
+import { ReturnsComponent } from './components/returns/returns.component';
+import { FaqComponent } from './components/faq/faq.component';
+import { TermsConditionsComponent } from './components/terms-conditions/terms-conditions.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
+import { OrderHistoryComponent } from './components/order-history/order-history.component';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 
+
+
+const oktaConfig = myAppConfig.oidc;
+const oktaAuth = new OktaAuth(oktaConfig);
 
 @NgModule({
   declarations: [
@@ -35,7 +53,17 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     CartDetailsComponent,
     WishlistStatusComponent,
     WishlistComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    LoginComponent,
+    LoginStatusComponent,
+    UserAccountComponent,
+    SizeGuideComponent,
+    ShippingComponent,
+    ReturnsComponent,
+    FaqComponent,
+    TermsConditionsComponent,
+    PrivacyPolicyComponent,
+    OrderHistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -44,9 +72,14 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     FormsModule,
     ReactiveFormsModule,
     NgxMaskDirective,
-    NgxMaskPipe
+    NgxMaskPipe,
+    OktaAuthModule
   ],
-  providers: [provideNgxMask()],
+  providers: [
+    provideNgxMask(), 
+    {provide: OKTA_CONFIG, useValue: {oktaAuth}},
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

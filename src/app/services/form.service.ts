@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Country } from '../common/country';
 import { City } from '../common/city';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormService {
 
-  baseUrl: string = 'http://localhost:8080/api'
+  baseUrl: string = environment.clotheryApi;
 
   constructor(private httpClient: HttpClient) { }
 

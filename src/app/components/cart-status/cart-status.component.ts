@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
-import { QuickCartDetailsComponent } from "../quick-cart-details/quick-cart-details.component";
+import { UserAccountService } from '../../services/user-account.service';
+
 
 @Component({
   selector: 'app-cart-status',
@@ -12,7 +13,11 @@ export class CartStatusComponent implements OnInit {
   totalPrice: number = 0;
   totalQuantity: number = 0;
 
-  constructor(private cartService: CartService){}
+
+  constructor(
+    private cartService: CartService,
+    private userAccountService: UserAccountService
+  ){}
 
   ngOnInit(): void {
     this.updateCartStatus();
@@ -26,6 +31,13 @@ export class CartStatusComponent implements OnInit {
     this.cartService.totalPrice.subscribe(
       data => this.totalPrice = data
     );
+  }
+
+  showQuickCart(){
+    if(this.totalPrice > 0){
+      this.userAccountService.isDisplayed.next(false);
+      this.cartService.isCartDisplayed.next(true);
+    }
   }
 
 }
